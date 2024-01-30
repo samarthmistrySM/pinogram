@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -8,11 +11,10 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import Upload from "./pages/Upload";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
 
 function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
-
+  const [loggedUser, setLoggedUser] = useState({});
   const [users, setUsers] = useState([]);
   const API_URL = "http://localhost:4000/api/users";
 
@@ -21,6 +23,13 @@ function App() {
       try {
         const response = await axios.get(API_URL);
         setUsers(response.data);
+        const authCookie = Cookies.get("auth");
+        if (authCookie) {
+          const userData = JSON.parse(authCookie);
+          console.log(userData);
+          setIsLoggedin(true);
+          setLoggedUser(userData);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -29,32 +38,40 @@ function App() {
     fetchData();
   }, []);
 
+  const handleLogout = () => {
+    setIsLoggedin(false);
+    console.log(isLoggedin);
+    Cookies.remove("auth");
+    setLoggedUser({});
+  };  
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
+      <Header isLoggedin={isLoggedin} handleLogout={handleLogout} />
         <Routes>
           <Route
-            path="/" element={ isLoggedin ? <Navigate to="/home" /> :  
-            <Login users={users} setIsLoggedin={setIsLoggedin} />}
+            path="/" element={isLoggedin ? <Navigate to='/home'/> :
+            <Login users={users} setIsLoggedin={setIsLoggedin} setLoggedUser={setLoggedUser} />}
+          />
+        <Route
+            path="/profile"
+            element={<Profile loggedUser={loggedUser}/>}
           />
           <Route path="/signup" element={<Register />} />
           <Route
             path="/home"
-            element={isLoggedin ? <Home /> : <Navigate to="/" />}
+            element={<Home /> }
           />
           <Route
             path="/upload"
-            element={isLoggedin ? <Upload /> : <Navigate to="/" />}
+            element={<Upload /> }
           />
           <Route
             path="/search"
-            element={isLoggedin ? <Search /> : <Navigate to="/" />}
+            element={ <Search /> }
           />
-          <Route
-            path="/profile"
-            element={isLoggedin ? <Profile /> : <Navigate to="/" />}
-          />
+         
         </Routes>
         <Footer />
       </BrowserRouter>

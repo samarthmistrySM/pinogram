@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
-export default function Login({users,setIsLoggedin}) {
+export default function Login({users,setIsLoggedin,setLoggedUser}) {
 
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,21 +18,32 @@ export default function Login({users,setIsLoggedin}) {
       data[key] = value;
     });
 
-    const User = users.find((user)=>user.email === data.email)
+    const user = users.find((user)=>user.email === data.email)
 
-    if(User){
-      if(User.password === data.password){
+
+    if (user) {
+
+      if(user.password === data.password){
+        const expirationTime = new Date(new Date().getTime() + 60000);
+        Cookies.set("auth", JSON.stringify(user), { expires: expirationTime });
         toast.success("User logged in!");
+        setLoggedUser(user);
         setIsLoggedin(true);
-      }else{
+        return true;
+      }
+      else{
         toast.error("Wrong password!");
         setIsLoggedin(false);
+        return false;
       }
-    }else{
+    }
+    else{
       toast.error("Try again!");
       setIsLoggedin(false);
+      return false;
     }
   };
+  
   return (
     <>
       <section className="bg-gray-50 ">

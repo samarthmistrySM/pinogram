@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../pinorama.png";
 
-export default function Header() {
+export default function Header({handleLogout}) {
   return (
     <div>
       <div>
@@ -50,6 +50,9 @@ export default function Header() {
                   >
                     Profile
                   </NavLink>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
             </div>

@@ -24,8 +24,9 @@ export default function Login({users,setIsLoggedin,setLoggedUser}) {
     if (user) {
 
       if(user.password === data.password){
-        const expirationTime = new Date(new Date().getTime() + 60000);
+        const expirationTime = new Date(new Date().getTime() + 120000);
         Cookies.set("auth", JSON.stringify(user), { expires: expirationTime });
+        
         toast.success("User logged in!");
         setLoggedUser(user);
         setIsLoggedin(true);

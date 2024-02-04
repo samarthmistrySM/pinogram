@@ -2,7 +2,7 @@ const userModel = require('../models/users')
 
 async function getAllUser(req,res) {
     const users = await userModel.find({});
-    res.send(users)
+    res.send(users);
 }
 
 async function postUsers(req, res) {

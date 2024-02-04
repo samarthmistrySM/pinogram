@@ -25,8 +25,9 @@ function App() {
         setUsers(response.data);
         const authCookie = Cookies.get("auth");
         if (authCookie) {
+
           const userData = JSON.parse(authCookie);
-          console.log(userData);
+          console.log(userData.posts.length);
           setIsLoggedin(true);
           setLoggedUser(userData);
         }

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
-  const API_URL = "http://localhost:4000/api/users";
+  const API_URL = "http://localhost:4000/api/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ export default function Register() {
     });
 
     try {
-      const response = await axios.post(API_URL, data);
+      const response = await axios.post(API_URL+"users", data);
 
       toast.success("Registration successful!");
       console.log("Response:", response.data);

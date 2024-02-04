@@ -30,7 +30,7 @@ export default function Profile() {
             <div className="flex justify-between items-center mt-6">
               <div className="text-center">
                 <h2 className="text-xl font-bold text-black">Posts</h2>
-                <p className="text-black">{loggedUser.posts.length}</p>
+                <p className="text-black">{loggedUser.posts.length }</p>
               </div>
               <button className="bg-blue-500 text-white py-2 px-4 rounded-full">
                 Follow

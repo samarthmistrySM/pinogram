@@ -1,5 +1,7 @@
+const lazzer = require('lazzer')
 const postModel = require('../models/posts')
 const userModel = require('../models/users')
+
 async function getAllPosts(req,res) {
     const posts = await postModel.find({});
     res.send(posts);
@@ -17,7 +19,7 @@ async function uploadedPost(req,res) {
             caption:caption,
             user:user,
         })
-        console.log(post);
+        lazzer.info(post);
         await user.posts.push(post._id)
         await user.save();
         res.status(200).send("post saved!");
@@ -29,7 +31,61 @@ async function uploadedPost(req,res) {
    }
 }
 
+async function likePost(req,res) {
+    const postId = req.query.postId;
+    const userId = req.query.userId;
+
+    try {
+        const post = await postModel.findById(postId);
+
+        if(!post){
+            res.status(404).send('post not fount');
+        }else{
+            const userLiked = post.likes.includes(userId);
+
+            if(!userLiked){
+                post.likes.push(userId);
+                await post.save();
+                return res.status(200).send('User liked!');
+            }else{
+                post.likes.pull(userId);
+                await post.save();
+                return res.status(200).send('User disliked!');
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function deletePost(req, res) {
+    const postId = req.query.postId;
+    const userId = req.query.userId;
+
+    try {
+        const post = await postModel.findById(postId);
+        const user = await userModel.findById(userId);
+
+        if (!post) {
+            res.status(404).send('Post not found');
+        } else {
+            await postModel.findByIdAndDelete(post);
+            await user.posts.pull(postId);
+            await user.save();
+            res.status(200).send('Post deleted successfully!');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+
 module.exports = {
     getAllPosts,
-    uploadedPost
+    uploadedPost,
+    likePost,
+    deletePost
 }

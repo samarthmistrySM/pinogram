@@ -2,16 +2,19 @@ const express = require('express');
 require('dotenv').config()
 const cors = require('cors');
 const logger = require('morgan')
+const lazzer = require('lazzer')
 const path = require('path')
 const {connectDb} = require('./connection')
-const userRouter =  require('./routes/users')
-const postRouter = require('./routes/posts')
+const userRouter =  require('./routes/userRouter')
+const postRouter = require('./routes/postRouter')
 const app = express();
 const PORT = process.env.PORT;
 
 connectDb(process.env.MONGO)
-.then(()=>{console.log("Database Conneted")})
-.catch((error)=>{console.log("Failed Database Connection" + error);})
+.then(()=>{lazzer.info("Database Conneted")})
+.catch((error)=>{lazzer.error("Failed Database Connection" + error);})
+
+
 
 app.use(cors())
 app.use(logger('dev'));
@@ -23,5 +26,5 @@ app.use('/api/users',userRouter)
 app.use('/api/posts',postRouter)
 
 app.listen(PORT,()=>{
-    console.log(`Server Started at http://localhost:${PORT}`);
+    lazzer.info(`Server Started at http://localhost:${PORT}`);
 })

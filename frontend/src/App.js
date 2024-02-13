@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +12,7 @@ import Upload from "./pages/Upload";
 import Footer from "./components/Footer";
 
 function App() {
+  const [count, setCount] = useState(1);
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [loggedUser, setLoggedUser] = useState({});
   const [users, setUsers] = useState([]);
@@ -22,14 +22,31 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await axios.get(API_URL);
-        setUsers(response.data);
-        const authCookie = Cookies.get("auth");
-        if (authCookie) {
+        const fetchedUsers = response.data;
+        setUsers(fetchedUsers);
 
-          const userData = JSON.parse(authCookie);
-          console.log(userData.posts.length);
+        const Token = await  JSON.parse(localStorage.getItem('token'))
+        
+        const userEmail = Token.email;
+        const userPassword = Token.password;
+
+        const user = await fetchedUsers.find(user => user.email === userEmail && user.password === userPassword);
+        
+        if(user){
           setIsLoggedin(true);
-          setLoggedUser(userData);
+          setLoggedUser(user)
+        }else{
+          setIsLoggedin(false)
+        }
+
+        if (count > 1) {
+          const userExists = await fetchedUsers.find(
+            (user) => user.username === loggedUser.username
+          );
+          if (userExists) {
+            setLoggedUser(userExists);
+          }
+          setIsLoggedin(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -37,42 +54,61 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [count, loggedUser.username]);
 
-  const handleLogout = () => {
+  const handleLogout = () =>{
+    localStorage.removeItem('token');
     setIsLoggedin(false);
-    console.log(isLoggedin);
-    Cookies.remove("auth");
-    setLoggedUser({});
-  };  
-
+  };
   return (
     <div className="App">
       <BrowserRouter>
-      <Header isLoggedin={isLoggedin} handleLogout={handleLogout} />
+        <Header handleLogout={handleLogout}/>
         <Routes>
           <Route
-            path="/" element={isLoggedin ? <Navigate to='/home'/> :
-            <Login users={users} setIsLoggedin={setIsLoggedin} setLoggedUser={setLoggedUser} />}
+            path="/"
+            element={
+              isLoggedin ? (
+                <Navigate to="/home" />
+              ) : (
+                <Login
+                  users={users}
+                  setIsLoggedin={setIsLoggedin}
+                  setLoggedUser={setLoggedUser}
+                />
+              )
+            }
           />
-        <Route
+          <Route
             path="/profile"
-            element={<Profile loggedUser={loggedUser}/>}
+            element={
+              isLoggedin ? (
+                <Profile loggedUser={loggedUser} setCount={setCount}/>
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
-          <Route path="/signup" element={<Register />} />
+          <Route path="/signup" element={<Register setCount={setCount} />} />
           <Route
             path="/home"
-            element={<Home /> }
+            element={isLoggedin ? <Home /> : <Navigate to="/" />}
           />
           <Route
             path="/upload"
-            element={<Upload /> }
+            element={
+              isLoggedin ? (
+                <Upload setCount={setCount} loggedUser={loggedUser} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/search"
-            element={ <Search /> }
+            element={isLoggedin ? <Search /> : <Navigate to="/" />}
           />
-         
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />
       </BrowserRouter>

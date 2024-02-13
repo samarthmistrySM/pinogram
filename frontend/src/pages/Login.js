@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
 
 export default function Login({users,setIsLoggedin,setLoggedUser}) {
 
@@ -24,22 +23,26 @@ export default function Login({users,setIsLoggedin,setLoggedUser}) {
     if (user) {
 
       if(user.password === data.password){
-        const expirationTime = new Date(new Date().getTime() + 120000);
-        Cookies.set("auth", JSON.stringify(user), { expires: expirationTime });
-        
-        toast.success("User logged in!");
+        localStorage.setItem('token', JSON.stringify(user));
+        toast.success("User logged in!", {
+          position: "bottom-center"
+        });
         setLoggedUser(user);
         setIsLoggedin(true);
         return true;
       }
       else{
-        toast.error("Wrong password!");
+        toast.error("Wrong password!", {
+          position: "bottom-center"
+        });
         setIsLoggedin(false);
         return false;
       }
     }
     else{
-      toast.error("Try again!");
+      toast.error("Try again!", {
+        position: "bottom-center"
+      });
       setIsLoggedin(false);
       return false;
     }

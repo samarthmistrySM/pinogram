@@ -1,7 +1,8 @@
 const userModel = require('../models/users')
+const lazzer = require('lazzer')
 
 async function getAllUser(req,res) {
-    const users = await userModel.find({});
+    const users = await userModel.find({}).populate('posts');
     res.send(users);
 }
 

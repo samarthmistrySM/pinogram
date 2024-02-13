@@ -23,7 +23,6 @@ export default function Register() {
 
       toast.success("Registration successful!");
       console.log("Response:", response.data);
-
     } catch (error) {
       if(error.response.status === 400){
         toast.error("Username already exist!");

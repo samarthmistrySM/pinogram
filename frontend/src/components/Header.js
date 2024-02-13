@@ -52,7 +52,7 @@ export default function Header({handleLogout}) {
                   </NavLink>
                 </li>
                 <li>
-                  <button onClick={handleLogout}>Logout</button>
+                  <button className="text-red-800" onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
             </div>

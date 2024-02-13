@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Register() {
+export default function Register({setCount}) {
   const API_URL = "http://localhost:4000/api/";
 
   const handleSubmit = async (e) => {
@@ -23,6 +23,7 @@ export default function Register() {
 
       toast.success("Registration successful!");
       console.log("Response:", response.data);
+      setCount(count => count +1)
     } catch (error) {
       if(error.response.status === 400){
         toast.error("Username already exist!");

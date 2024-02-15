@@ -30,8 +30,46 @@ async function postUsers(req, res) {
     }
 }
 
+async function updateUser(req, res) {
+    const userId = req.params.id;
+
+    try {
+        const user = await userModel.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const { fullName, avatarUrl, backgroundImageUrl } = req.body;
+
+        const updateFields = {};
+
+        if (fullName) {
+            updateFields.fullname = fullName;
+        }
+
+        if (avatarUrl) {
+            updateFields.dp = avatarUrl;
+        }
+
+        if (backgroundImageUrl) {
+            updateFields.bg = backgroundImageUrl;
+        }
+
+        const updatedUser = await userModel.findByIdAndUpdate(userId, updateFields, { new: true });
+        console.log(updatedUser);
+        res.status(200).json('User updated!');
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+
 
 module.exports={
     getAllUser,
-    postUsers
+    postUsers,
+    updateUser
 }

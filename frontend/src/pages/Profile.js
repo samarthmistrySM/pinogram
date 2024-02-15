@@ -6,7 +6,7 @@ export default function Profile({loggedUser,setCount}) {
 
   return (
     <>
-      <ProfileHeader loggedUser={loggedUser} />
+      <ProfileHeader loggedUser={loggedUser} setCount={setCount}/>
 
       <div className="flex flex-wrap justify-center items-center">
         {loggedUser.posts.map((post, index) => (

@@ -3,7 +3,7 @@ const postModel = require('../models/posts')
 const userModel = require('../models/users')
 
 async function getAllPosts(req,res) {
-    const posts = await postModel.find({});
+    const posts = await postModel.find({}).populate('user');
     res.send(posts);
 }
 
@@ -19,8 +19,7 @@ async function uploadedPost(req,res) {
             caption:caption,
             user:user,
         })
-        lazzer.info(post);
-        await user.posts.push(post._id)
+        await user.posts.push(post._id);
         await user.save();
         res.status(200).send("post saved!");
     }else{
@@ -46,16 +45,16 @@ async function likePost(req,res) {
             if(!userLiked){
                 post.likes.push(userId);
                 await post.save();
-                return res.status(200).send('User liked!');
+                return res.status(200).send('👍 User liked!');
             }else{
                 post.likes.pull(userId);
                 await post.save();
-                return res.status(200).send('User disliked!');
+                return res.status(200).send('👎 User disliked!');
             }
         }
 
     } catch (error) {
-        console.log(error);
+        lazzer.error(error);
         res.status(500).send('Internal Server Error');
     }
 }

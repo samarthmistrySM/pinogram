@@ -92,7 +92,7 @@ function App() {
           <Route path="/signup" element={<Register setCount={setCount} />} />
           <Route
             path="/home"
-            element={isLoggedin ? <Home /> : <Navigate to="/" />}
+            element={isLoggedin ? <Home setCount={setCount} count={count} loggedUser={loggedUser} /> : <Navigate to="/" />}
           />
           <Route
             path="/upload"

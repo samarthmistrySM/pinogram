@@ -57,7 +57,6 @@ async function updateUser(req, res) {
         }
 
         const updatedUser = await userModel.findByIdAndUpdate(userId, updateFields, { new: true });
-        console.log(updatedUser);
         res.status(200).json('User updated!');
 
     } catch (error) {

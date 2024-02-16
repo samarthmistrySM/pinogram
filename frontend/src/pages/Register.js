@@ -19,10 +19,9 @@ export default function Register({setCount}) {
     });
 
     try {
-      const response = await axios.post(API_URL+"users", data);
+      await axios.post(API_URL+"users", data);
 
       toast.success("Registration successful!");
-      console.log("Response:", response.data);
       setCount(count => count +1)
     } catch (error) {
       if(error.response.status === 400){

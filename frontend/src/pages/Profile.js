@@ -2,7 +2,7 @@ import React from "react";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import Card from "../components/Profile/Card";
 
-export default function Profile({loggedUser,setCount}) {
+export default function Profile({loggedUser, setCount}) {
 
   return (
     <>

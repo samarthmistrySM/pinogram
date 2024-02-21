@@ -65,10 +65,22 @@ async function updateUser(req, res) {
     }
 }
 
+async function getSearch(req,res) {
+    const query = req.query.query;
+    try{
+        const user = await userModel.find({username: {$regex: new RegExp(query,'i')}})
+        res.send(user);
+    }catch(error){
+        console.error('Error searching for usgers:', error);
+      res.status(500).send('Internal Server Error');
+    }
+}
+
 
 
 module.exports={
     getAllUser,
     postUsers,
-    updateUser
+    updateUser,
+    getSearch,
 }

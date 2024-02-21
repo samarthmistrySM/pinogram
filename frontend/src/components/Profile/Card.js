@@ -61,7 +61,7 @@ export default function Card({ post, index, setCount, loggedUser }) {
   return (
     <div className="max-w-md mx-auto my-4">
       <div key={index} className="overflow-hidden rounded-lg shadow-lg">
-        <img src={post.image} alt={post.caption} className="w-full" />
+        <img src={post.image} alt={post.caption} className="w-full h-72 object-cover" />
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{post.caption}</div>
           <p className="text-gray-700 text-base">

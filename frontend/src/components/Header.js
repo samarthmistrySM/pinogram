@@ -37,14 +37,6 @@ export default function Header({handleLogout}) {
                 </li>
                 <li>
                   <NavLink
-                    to="/upload"
-                    className={`block py-2 pl-3 pr-4  md:hover:text-red-600 md:p-0 `}
-                  >
-                    Upload
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
                     to="/profile"
                     className={`block py-2 pl-3 pr-4  md:hover:text-red-600 md:p-0 `}
                   >

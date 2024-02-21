@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { FaPlusCircle } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaPlusCircle } from "react-icons/fa";
 
-import Modal from './Modal';
+import Modal from "./Modal";
+import Upload from "../../pages/Upload";
 
-export default function ProfileHeader({ loggedUser,setCount }) {
+export default function ProfileHeader({ loggedUser, setCount }) {
   const [showModal, setShowModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -19,7 +21,8 @@ export default function ProfileHeader({ loggedUser,setCount }) {
   };
 
   return (
-    <div className="h-3/4 bg-cover bg-center flex items-center justify-center"
+    <div
+      className="h-3/4 bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${loggedUser.bg})` }}
     >
       <div className="flex w-screen flex-col items-center text-white">
@@ -39,11 +42,12 @@ export default function ProfileHeader({ loggedUser,setCount }) {
               <p className="text-black">{loggedUser.posts.length}</p>
             </div>
             <button
+              onClick={() => setShowUploadModal(true)}
               className="flex justify-center items-center ml- px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               <FaPlusCircle />
             </button>
-            <button 
+            <button
               onClick={handleToggleModal}
               className="bg-blue-500 text-white py-2 px-4 rounded-full"
             >
@@ -53,7 +57,20 @@ export default function ProfileHeader({ loggedUser,setCount }) {
         </div>
       </div>
       {showModal && (
-        <Modal loggedUser={loggedUser} setCount={setCount} handleCloseModal={handleCloseModal} handleSubmitForm={handleSubmitForm}  />
+        <Modal
+          loggedUser={loggedUser}
+          setCount={setCount}
+          handleCloseModal={handleCloseModal}
+          handleSubmitForm={handleSubmitForm}
+        />
+      )}
+
+      {showUploadModal && (
+        <Upload
+          setCount={setCount}
+          setShowUploadModal={setShowUploadModal}
+          loggedUser={loggedUser}
+        />
       )}
     </div>
   );

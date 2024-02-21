@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 export default function Modal({ handleCloseModal, loggedUser, setCount }) {
+  
   const [fullName, setFullName] = useState(loggedUser.fullname);
   const [avatar, setAvatar] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -133,7 +134,7 @@ export default function Modal({ handleCloseModal, loggedUser, setCount }) {
           <button
             type="submit"
             className="text-white inline-flex items-center bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            disabled={isUploading} // Disable the button while uploading
+            disabled={isUploading} 
           >
             {isUploading ? 'Uploading...' : 'Update Profile'}
           </button>

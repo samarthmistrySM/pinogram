@@ -8,7 +8,6 @@ import Register from "./pages/Register";
 import Header from "./components/Header";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
-import Upload from "./pages/Upload";
 import Footer from "./components/Footer";
 
 function App() {
@@ -93,16 +92,6 @@ function App() {
           <Route
             path="/home"
             element={isLoggedin ? <Home setCount={setCount} count={count} loggedUser={loggedUser} /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/upload"
-            element={
-              isLoggedin ? (
-                <Upload setCount={setCount} loggedUser={loggedUser} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
           />
           <Route
             path="/search"

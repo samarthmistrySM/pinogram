@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
   fullname: {
     type: String,
   },
+  followers: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = mongoose.model('User', userSchema);

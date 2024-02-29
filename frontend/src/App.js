@@ -9,9 +9,11 @@ import Header from "./components/Header";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
+import Feed from "./pages/Feed";
 
 function App() {
   const [count, setCount] = useState(1);
+  
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [loggedUser, setLoggedUser] = useState({});
   const [users, setUsers] = useState([]);
@@ -91,11 +93,15 @@ function App() {
           <Route path="/signup" element={<Register setCount={setCount} />} />
           <Route
             path="/home"
-            element={isLoggedin ? <Home setCount={setCount} count={count} loggedUser={loggedUser} /> : <Navigate to="/" />}
+            element={isLoggedin ? <Home users={users} setCount={setCount} count={count} loggedUser={loggedUser} /> : <Navigate to="/" />}
           />
           <Route
             path="/search"
             element={isLoggedin ? <Search /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/feed"
+            element={ <Feed />}
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

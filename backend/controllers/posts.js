@@ -45,11 +45,11 @@ async function likePost(req,res) {
             if(!userLiked){
                 post.likes.push(userId);
                 await post.save();
-                return res.status(200).send('👍 User liked!');
+                return res.status(200).send('👍 Post Liked!');
             }else{
                 post.likes.pull(userId);
                 await post.save();
-                return res.status(200).send('👎 User disliked!');
+                return res.status(200).send('👎 Post Disliked!');
             }
         }
 
@@ -70,6 +70,7 @@ async function deletePost(req, res) {
         if (!post) {
             res.status(404).send('Post not found');
         } else {
+            console.log(post.image);
             await postModel.findByIdAndDelete(post);
             await user.posts.pull(postId);
             await user.save();

@@ -22,7 +22,7 @@ export default function ProfileHeader({ loggedUser, setCount }) {
 
   return (
     <div
-      className="h-3/4 bg-cover bg-center flex items-center justify-center"
+      className="h-5/6 w-full bg-cover bg-center flex items-center justify-center rounded-md"
       style={{ backgroundImage: `url(${loggedUser.bg})` }}
     >
       <div className="flex w-screen flex-col items-center text-white">

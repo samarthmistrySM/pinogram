@@ -68,7 +68,7 @@ async function updateUser(req, res) {
 async function getSearch(req,res) {
     const query = req.query.query;
     try{
-        const user = await userModel.find({username: {$regex: new RegExp(query,'i')}})
+        const user = await userModel.find({username: {$regex: new RegExp(query,'i')}}).populate('posts')
         res.send(user);
     }catch(error){
         console.error('Error searching for usgers:', error);

@@ -60,8 +60,12 @@ export default function Card({ post, index, setCount, loggedUser }) {
 
   return (
     <div className="max-w-md mx-auto my-4">
-      <div key={index} className="overflow-hidden rounded-lg shadow-lg">
-        <img src={post.image} alt={post.caption} className="w-full h-72 object-cover" />
+      <div key={index} className="overflow-hidden bg-gray-50 rounded-lg shadow-lg">
+        <div className="mx-4 my-1 flex items-center ">
+          <img src={post.user.dp} className="w-10 h-10 object-cover rounded-full" alt="" />
+          <strong className="mx-3">{post.user.username}</strong>
+        </div>
+        <img src={post.image} alt={post.caption} className="w-full object-cover" />
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{post.caption}</div>
           <p className="text-gray-700 text-base">
@@ -90,12 +94,12 @@ export default function Card({ post, index, setCount, loggedUser }) {
             <button className="flex items-center px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
               <FaComment className="mr-2" /> Comment
             </button>
-            <button
+            {(post.user === loggedUser._id)&&(<button
               onClick={handleDelete}
               className="flex items-center px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               <FaTrash className="mr-2" /> Delete
-            </button>
+            </button>)}
           </div>
         </div>
       </div>

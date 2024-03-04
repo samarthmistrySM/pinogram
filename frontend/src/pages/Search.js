@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Profile from "./Profile";
+export default function Search({count, user, setCount }) {
 
-export default function Search() {
+
   const API_URL = "http://localhost:4000/api/users/";
   const [search, setSearch] = useState([]);
 
@@ -16,8 +18,12 @@ export default function Search() {
     }
   };
 
-  const handleSelectUser = (user) => {
-    setSelectedUser(user);
+  useEffect(()=>{
+    
+  },[count])
+
+  const handleSelectUser = (selectuser) => {
+    setSelectedUser(selectuser);
   };
 
   return (
@@ -31,42 +37,25 @@ export default function Search() {
         }}
       />
 
-      <div className="grid grid-cols-3 gap-4">
-        {search.map((user,index) => (
+      <div className="grid grid-cols-3 gap-4 mb-5">
+        {search.map((selectuser, index) => (
           <button
             key={index}
             className="p-4 my -4 border border-gray-300 rounded cursor-pointer hover:bg-gray-100"
-            onClick={() => handleSelectUser(user)}
+            onClick={() => handleSelectUser(selectuser)}
           >
-            <p className="text-lg font-semibold">{user.username}</p>
-            <p className="text-sm text-gray-500">{user.email}</p>
+            <p className="text-lg font-semibold">{selectuser.username}</p>
+            <p className="text-sm text-gray-500">{selectuser.email}</p>
           </button>
-        ))}
+        ))} 
       </div>
 
-      {selectedUser && (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Selected User</h2>
-          <div className="border border-gray-300 rounded p-4">
-            <div
-              className="h-3/4 py-8 relative bg-cover bg-center flex items-center justify-around"
-              style={{ backgroundImage: `url(${selectedUser.bg})` }}
-            >
-              <img
-                className="w-32 h-32 justify-start object-cover rounded-full"
-                src={selectedUser.dp}
-                alt={selectedUser.dp}
-              />
-              <div className="text-white z-10">
-                <p className="text-2xl font-semibold mix-blend-difference">
-                  {selectedUser.username}
-                </p>
-                <p className="text-lg mix-blend-difference">{selectedUser.email}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {selectedUser &&
+        (selectedUser._id === user._id ? (
+          <Profile setCount={setCount} loggedUser={user} user={selectedUser} />
+        ) : (
+          <Profile setCount={setCount} loggedUser={user} user={selectedUser} />
+        ))}
     </div>
   );
 }

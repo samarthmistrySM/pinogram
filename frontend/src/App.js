@@ -64,7 +64,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header handleLogout={handleLogout}/>
+        <Header  handleLogout={handleLogout}/>
+        <div className="mt-20">
         <Routes>
           <Route
             path="/"
@@ -84,7 +85,7 @@ function App() {
             path="/profile"
             element={
               isLoggedin ? (
-                <Profile loggedUser={loggedUser} setCount={setCount}/>
+                <Profile user={loggedUser} loggedUser={loggedUser} setCount={setCount}/>
               ) : (
                 <Navigate to="/" />
               )
@@ -97,7 +98,7 @@ function App() {
           />
           <Route
             path="/search"
-            element={isLoggedin ? <Search /> : <Navigate to="/" />}
+            element={isLoggedin ? <Search user={loggedUser} count={count} setCount={setCount} /> : <Navigate to="/" />}
           />
           <Route
             path="/feed"
@@ -105,6 +106,7 @@ function App() {
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+        </div>
         <Footer />
       </BrowserRouter>
     </div>

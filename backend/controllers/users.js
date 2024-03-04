@@ -2,7 +2,8 @@ const userModel = require('../models/users')
 const lazzer = require('lazzer')
 
 async function getAllUser(req,res) {
-    const users = await userModel.find({}).populate('posts');
+    const users = await userModel.find({}).populate('posts').populate('followers');
+    console.log(users);
     res.send(users);
 }
 
@@ -65,14 +66,46 @@ async function updateUser(req, res) {
     }
 }
 
-async function getSearch(req,res) {
+async function getSearch(req, res) {
     const query = req.query.query;
     try{
-        const user = await userModel.find({username: {$regex: new RegExp(query,'i')}}).populate('posts')
+        const user = await userModel.find({username: {$regex: new RegExp(query,'i')}}).populate('posts').populate('followers')
         res.send(user);
     }catch(error){
         console.error('Error searching for usgers:', error);
       res.status(500).send('Internal Server Error');
+    }
+}
+
+async function followUser(req, res) {
+    const fromUser = req.query.fromUser;
+    const toUser = req.query.toUser;
+
+    try {
+        if (fromUser === toUser) {
+            return res.status(400).send("Can't follow/unfollow the same user");
+        }
+
+        const user = await userModel.findById(toUser);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        const userFollowed = user.followers.includes(fromUser);
+
+        if (!userFollowed) {
+            user.followers.push(fromUser);
+            await user.save();
+            return res.status(200).send('Followed');
+        } else {
+            user.followers.pull(fromUser);
+            await user.save();
+            return res.status(200).send('Unfollowed');
+        }
+    } catch (error) {
+        lazzer.error(error);
+        res.status(500).send('Internal Server Error');
     }
 }
 
@@ -83,4 +116,5 @@ module.exports={
     postUsers,
     updateUser,
     getSearch,
+    followUser
 }

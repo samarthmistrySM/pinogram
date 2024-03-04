@@ -4,8 +4,8 @@ import { FiHome, FiSearch, FiUser, FiLogOut } from "react-icons/fi";
 
 export default function Header({ handleLogout }) {
   return (
-    <nav className="bg-white border-gray-200">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4">
+    <nav className="bg-white border-gray-200 fixed w-full z-10 top-0">
+      <div className="max-w-screen-xl flex items-center justify-center mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <NavLink
             to="/"

@@ -50,12 +50,12 @@ export default function Search({count, user, setCount }) {
         ))} 
       </div>
 
-      {selectedUser &&
+      {selectedUser ?
         (selectedUser._id === user._id ? (
           <Profile setCount={setCount} loggedUser={user} user={selectedUser} />
         ) : (
           <Profile setCount={setCount} loggedUser={user} user={selectedUser} />
-        ))}
+        )):<strong>Search/Select to see the user profile</strong>}
     </div>
   );
 }

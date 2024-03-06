@@ -16,7 +16,7 @@ const commentSchema = new mongoose.Schema({
   },
 });
 
-// Post Schema
+
 const postSchema = new mongoose.Schema({
   caption: {
     type: String,

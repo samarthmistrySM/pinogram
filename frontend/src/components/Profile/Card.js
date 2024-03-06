@@ -1,14 +1,27 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaThumbsUp, FaThumbsDown, FaComment, FaTrash } from "react-icons/fa";
+import CommentModal from "../commentModal";
 
-export default function Card({ post, index, setCount, loggedUser, user }) {
+export default function Card({count, post, index, setCount, loggedUser, user }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState({});
+
+  const openCommentModal = (post) => {
+    setIsModalOpen(true);
+    setSelectedPost(post);
+  };
+
+  const closeCommentModal = () => {
+    setIsModalOpen(false);
+  };
+
   const API_URL = "http://localhost:4000/api/";
 
   const handleLike = async () => {
-    console.log('asd');
+    console.log("asd");
     try {
       const response = await axios.put(
         API_URL + "posts/like/?postId=" + post._id + "&userId=" + loggedUser._id
@@ -117,7 +130,10 @@ export default function Card({ post, index, setCount, loggedUser, user }) {
               )}
             </button>
 
-            <button className="flex items-center px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+            <button
+              className="flex items-center px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+              onClick={()=>openCommentModal(post)}
+            >
               <FaComment className="mr-2" /> Comment
             </button>
             {post.user === loggedUser._id && (
@@ -128,6 +144,7 @@ export default function Card({ post, index, setCount, loggedUser, user }) {
                 <FaTrash className="mr-2" /> Delete
               </button>
             )}
+            <CommentModal count={count} setSelectedPost={setSelectedPost} setCount={setCount} loggedUser={loggedUser} isOpen={isModalOpen} selectedPost={selectedPost} onClose={closeCommentModal} />
           </div>
         </div>
       </div>

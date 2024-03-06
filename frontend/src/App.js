@@ -9,7 +9,6 @@ import Header from "./components/Header";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
-import Feed from "./pages/Feed";
 
 function App() {
   const [count, setCount] = useState(1);
@@ -85,7 +84,7 @@ function App() {
             path="/profile"
             element={
               isLoggedin ? (
-                <Profile user={loggedUser} loggedUser={loggedUser} setCount={setCount}/>
+                <Profile user={loggedUser} count={count} loggedUser={loggedUser} setCount={setCount}/>
               ) : (
                 <Navigate to="/" />
               )
@@ -100,10 +99,7 @@ function App() {
             path="/search"
             element={isLoggedin ? <Search user={loggedUser} count={count} setCount={setCount} /> : <Navigate to="/" />}
           />
-          <Route
-            path="/feed"
-            element={ <Feed />}
-          />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         </div>

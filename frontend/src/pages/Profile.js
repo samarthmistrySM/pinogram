@@ -2,7 +2,7 @@ import React from "react";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import Card from "../components/Profile/Card";
 
-export default function Profile({ user, loggedUser, setCount }) {
+export default function Profile({ user,count, loggedUser, setCount }) {
   return (
     <div className="container mx-auto px-4">
       <ProfileHeader user={user} loggedUser={loggedUser} setCount={setCount} />
@@ -10,7 +10,7 @@ export default function Profile({ user, loggedUser, setCount }) {
       <div className="flex rounded-xl mt-32 max-h-screen justify-around">
         <div className="hidden md:flex flex-col items-center px-7 overflow-y-auto">
           <div className="p-4 rounded-lg text-black">
-            <h2 className="text-xl font-semibold mb-4">Followers</h2>
+            <h2 className="text-xl font-semibold mb-4">Followers: {user.followers.length} </h2>
             {user.followers.length === 0 ? (
               <p>This user has no followers yet.</p>
             ) : (
@@ -44,6 +44,7 @@ export default function Profile({ user, loggedUser, setCount }) {
           ) : (
             user.posts.map((post, index) => (
               <Card
+                count={count}
                 key={index}
                 post={post}
                 setCount={setCount}

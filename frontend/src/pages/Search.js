@@ -18,9 +18,21 @@ export default function Search({count, user, setCount }) {
     }
   };
 
-  useEffect(()=>{
-    
-  },[count])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (selectedUser) {
+          const response = await axios.get(API_URL+"user/" + selectedUser._id);
+          setSelectedUser(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching selected user:', error);
+      }
+    };
+  
+    fetchData();
+  }, [count]);
+  
 
   const handleSelectUser = (selectuser) => {
     setSelectedUser(selectuser);
@@ -31,7 +43,7 @@ export default function Search({count, user, setCount }) {
       <input
         type="text"
         placeholder="Search users..."
-        className="w-full border border-gray-300 rounded p-2 mb-4"
+        className="w-full border  border-gray-300 rounded p-2 mb-4"
         onChange={(e) => {
           handleFetch(e.target.value);
         }}
@@ -52,10 +64,10 @@ export default function Search({count, user, setCount }) {
 
       {selectedUser ?
         (selectedUser._id === user._id ? (
-          <Profile setCount={setCount} loggedUser={user} user={selectedUser} />
+          <Profile count={count} setCount={setCount} loggedUser={user} user={selectedUser} />
         ) : (
-          <Profile setCount={setCount} loggedUser={user} user={selectedUser} />
-        )):<strong>Search/Select to see the user profile</strong>}
+          <Profile count={count} setCount={setCount} loggedUser={user} user={selectedUser} />
+        )):<strong className="text-center">Search/Select to see the user profile</strong>}
     </div>
   );
 }

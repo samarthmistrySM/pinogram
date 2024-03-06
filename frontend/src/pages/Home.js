@@ -34,7 +34,7 @@ export default function Home({ users, count, loggedUser, setCount }) {
               <div>
                 <p className="font-semibold">{user.username}</p>
                 <p className="text-sm w-full text-gray-500">
-                  Follow this user for more content
+                  Search this user for more content
                 </p>
               </div>
             </div>
@@ -55,6 +55,7 @@ export default function Home({ users, count, loggedUser, setCount }) {
             post={post}
             setCount={setCount}
             loggedUser={loggedUser}
+            count={count}
           />
         ))}
       </div>

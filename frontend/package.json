@@ -18,6 +18,7 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.3",
     "sheryjs": "^1.0.0-beta.0.1.7",
+    "socket.io-client": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -3,9 +3,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Login({users,setIsLoggedin,setLoggedUser}) {
-
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 

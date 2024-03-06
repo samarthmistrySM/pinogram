@@ -4,7 +4,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {FiSend, } from 'react-icons/fi'
 
-const CommentModal = ({ isOpen, count , setCount, loggedUser, selectedPost, onClose, setSelectedPost }) => {
+const CommentModal = ({ 
+  isOpen, 
+  count , 
+  setCount, 
+  loggedUser, 
+  selectedPost, 
+  onClose, 
+  setSelectedPost }) => {
   const [comment, setComment] = useState('');
 
   const API_URL = 'http://localhost:4000/api/';

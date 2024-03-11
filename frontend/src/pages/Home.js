@@ -49,15 +49,15 @@ export default function Home({ users, count, loggedUser, setCount }) {
           scrollbarColor: "transparent transparent",
         }}
       >
-        {posts.map((post, index) => (
-          <Card
-            key={index}
-            post={post}
-            setCount={setCount}
-            loggedUser={loggedUser}
-            count={count}
-          />
-        ))}
+        {posts.slice().reverse().map((post, index) => (
+            <Card
+              key={index}
+              post={post}
+              setCount={setCount}
+              loggedUser={loggedUser}
+              count={count}
+            />
+          ))}
       </div>
 
       <div className="hidden md:flex flex-col items-center">

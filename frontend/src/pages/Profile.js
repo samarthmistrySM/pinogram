@@ -4,7 +4,7 @@ import Card from "../components/Profile/Card";
 
 export default function Profile({ user,count, loggedUser, setCount }) {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto p-4">
       <ProfileHeader user={user} loggedUser={loggedUser} setCount={setCount} />
 
       <div className="flex rounded-xl mt-32 max-h-screen justify-around">
@@ -42,7 +42,7 @@ export default function Profile({ user,count, loggedUser, setCount }) {
           {user.posts.length === 0 ? (
             <p>User hasn't posted anything yet.</p>
           ) : (
-            user.posts.map((post, index) => (
+            user.posts.slice().reverse().map((post, index) => (
               <Card
                 count={count}
                 key={index}

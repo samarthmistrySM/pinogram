@@ -24,13 +24,7 @@ export default function ProfileHeader({ user, loggedUser, setCount }) {
 
   const handleFollow = async () => {
     try {
-      const response = await axios.post(
-        API_URL +
-          "users/follow/?fromUser=" +
-          loggedUser._id +
-          "&toUser=" +
-          user._id
-      );
+      const response = await axios.post(`${API_URL}users/follow/?fromUser=${loggedUser._id}&toUser=${user._id}`);
       if (response) {
         setCount((count) => count + 1);
         toast.success(response.data, {
@@ -53,21 +47,21 @@ export default function ProfileHeader({ user, loggedUser, setCount }) {
 
   return (
     <div
-      className="h-[50vh] w-full bg-cover bg-center flex items-center justify-center rounded-md"
+      className="h-[50vh] w-full bg-cover bg-center flex md:flex-row flex-col items-center justify-center rounded-md"
       style={{ backgroundImage: `url(${user.bg})` }}
     >
-      <div className="flex h-full w-full justify-start items-end text-white mt-48 ml-12">
+      <div className="flex md:flex-row flex-col h-full w-full md:justify-start md:items-end justify-center items-center text-white mt-96 md:mt-48 md:ml-4 md:ml-12">
         <img
-          className="w-44 h-44 border-8 object-cover rounded-full"
+          className="w-32 h-32 md:w-44 md:h-44 border-8 object-cover rounded-full"
           src={user.dp}
           alt="Profile"
         />
-        <div className="mb-6 mx-4">
-          <h1 className="text-3xl text-gray-600  font-bold">{user.username}</h1>
+        <div className="md:mb-6 mx-4">
+          <h1 className="text-2xl md:text-3xl text-gray-600 font-bold">{user.username}</h1>
           <p className="text-gray-600">{user.fullname} </p>
         </div>
       </div>
-      <div className="flex h-full w-full mt-36 justify-end items-end">
+      <div className="flex h-full w-full md:mt-36 justify-center items-center md:justify-end md:items-end">
         {!(user.username === loggedUser.username) && (
           <button
             className="flex justify-center items-center mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"

@@ -21,11 +21,8 @@ export default function Card({count, post, index, setCount, loggedUser, user }) 
   const API_URL = "http://localhost:4000/api/";
 
   const handleLike = async () => {
-    console.log("asd");
     try {
-      const response = await axios.put(
-        API_URL + "posts/like/?postId=" + post._id + "&userId=" + loggedUser._id
-      );
+      const response = await axios.put(`${API_URL}posts/like/?postId=${post._id}&userId=${loggedUser._id}`);
       if (response) {
         setCount((count) => count + 1);
         toast.success(response.data, {
@@ -48,13 +45,7 @@ export default function Card({count, post, index, setCount, loggedUser, user }) 
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(
-        API_URL +
-          "posts/delete/?postId=" +
-          post._id +
-          "&userId=" +
-          loggedUser._id
-      );
+      const response = await axios.delete(`${API_URL}posts/delete/?postId=${post._id}&userId=${loggedUser._id}`);
 
       if (response) {
         setCount((count) => count + 1);

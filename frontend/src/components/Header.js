@@ -44,14 +44,7 @@ export default function Header({ handleLogout }) {
                 <FiUser />
               </NavLink>
             </li>
-            {/* <li>
-              <NavLink
-                to="/chat"
-                className={`block py-2 pl-3 pr-4  md:hover:text-red-600 md:p-0 `}
-              >
-                <FiMessageCircle />
-              </NavLink>
-            </li> */}
+            
             <li>
               <button
                 className="block py-2 pl-3 pr-4  md:hover:text-red-600 md:p-0 text-red-800"

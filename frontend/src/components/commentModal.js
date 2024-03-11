@@ -12,6 +12,7 @@ const CommentModal = ({
   selectedPost, 
   onClose, 
   setSelectedPost }) => {
+    
   const [comment, setComment] = useState('');
 
   const API_URL = 'http://localhost:4000/api/';

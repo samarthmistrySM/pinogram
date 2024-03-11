@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import axios from "axios";
-
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Header from "./components/Header";
 import Search from "./pages/Search";
+import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
 
@@ -27,17 +26,19 @@ function App() {
 
         const Token = await  JSON.parse(localStorage.getItem('token'))
         
-        const userEmail = Token.email;
+        if(Token){
+          const userEmail = Token.email;
         const userPassword = Token.password;
 
-        const user = await fetchedUsers.find(user => user.email === userEmail && user.password === userPassword);
-        
-        if(user){
-          setIsLoggedin(true);
-          setLoggedUser(user)
-        }else{
-          setIsLoggedin(false)
+          const user = await fetchedUsers.find(user => user.email === userEmail && user.password === userPassword);
+          if(user){
+            setIsLoggedin(true);
+            setLoggedUser(user)
+          }else{
+            setIsLoggedin(false)
+          }
         }
+        
 
         if (count > 1) {
           const userExists = await fetchedUsers.find(
@@ -64,7 +65,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header  handleLogout={handleLogout}/>
-        <div className="mt-20">
+        <div className="md:mt-20 mt-40">
         <Routes>
           <Route
             path="/"

@@ -12,7 +12,7 @@ export default function ProfileHeader({ user, loggedUser, setCount }) {
   const [showModal, setShowModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
 
-  const API_URL = "http://localhost:4000/api/";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const handleToggleModal = () => {
     setShowModal(!showModal);

@@ -15,7 +15,7 @@ function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [loggedUser, setLoggedUser] = useState({});
   const [users, setUsers] = useState([]);
-  const API_URL = "http://localhost:4000/api/users";
+  const API_URL = `${process.env.REACT_APP_API_URL}users`;
 
   useEffect(() => {
     const fetchData = async () => {

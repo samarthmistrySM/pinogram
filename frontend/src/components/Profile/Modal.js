@@ -26,7 +26,7 @@ export default function Modal({ handleCloseModal, loggedUser, setCount }) {
     };
 
     try {
-      const response = await axios.put('http://localhost:4000/api/users/update/'+loggedUser._id, formData);
+      const response = await axios.put(`${process.env.REACT_APP_API_URL}users/update/`+loggedUser._id, formData);
       if (response) {
         setCount((count) => count + 1);
         toast.success(response.data, {

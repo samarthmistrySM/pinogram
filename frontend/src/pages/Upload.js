@@ -13,7 +13,7 @@ export default function Upload({ setCount, loggedUser, setShowUploadModal }) {
 
 
   const handleImageUpload = async () => {
-    const API_URL = "http://localhost:4000/api/";
+    const API_URL = process.env.REACT_APP_API_URL;
     try {
       if (!selectedFile) {
         console.error("No file selected");

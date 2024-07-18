@@ -4,7 +4,7 @@ import Profile from "./Profile";
 export default function Search({count, user, setCount }) {
 
 
-  const API_URL = "http://localhost:4000/api/users/";
+  const API_URL = `${process.env.REACT_APP_API_URL}users/`;
   const [search, setSearch] = useState([]);
 
   const [selectedUser, setSelectedUser] = useState(null);

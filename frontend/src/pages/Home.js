@@ -5,7 +5,7 @@ import Card from "../components/Profile/Card";
 
 export default function Home({ users, count, loggedUser, setCount }) {
   const [posts, setPosts] = useState([]);
-  const API_URL = "http://localhost:4000/api/";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     async function fetchPosts() {

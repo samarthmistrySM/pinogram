@@ -107,6 +107,34 @@ async function postComment(req, res) {
   }
 }
 
+async function deleteComment(req,res) {
+  try{
+    const postId = req.body.postId;
+  const commentId = req.body.commentId;
+  const post = await postModel.findById(postId);
+
+  if (!post) {
+    return res.status(404).send('post not found');
+  }
+
+
+  const comment = post.comments.find((comment) => comment.id === commentId);
+
+
+  if(!comment){
+    return res.status(404).send('comment not found');
+  }
+
+  post.comments.splice(comment);
+  await post.save();
+
+  res.status(200).send('commment deleted!')
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 async function getPost(req, res) {
   const id = req.params.id;
   try {
@@ -128,5 +156,6 @@ module.exports = {
   likePost,
   deletePost,
   postComment,
-  getPost
+  getPost,
+  deleteComment
 };

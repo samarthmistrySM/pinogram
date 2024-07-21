@@ -14,17 +14,17 @@ export default function Footer() {
           </span>
           <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0">
             <li>
-              <a href="/" className="hover:underline me-4 md:me-6">
-                Github
+              <a href="https://github.com/samarthmistrySM/" className="hover:underline me-4 md:me-6">
+              Github
               </a>
             </li>
             <li>
-              <a href="/" className="hover:underline me-4 md:me-6">
+              <a href="https://www.linkedin.com/in/samarthmistry311/" className="hover:underline me-4 md:me-6">
                 Linked In
               </a>
             </li>
             <li>
-              <a href="/" className="hover:underline">
+              <a href="tel:9408618999" className="hover:underline">
                 Contact
               </a>
             </li>
